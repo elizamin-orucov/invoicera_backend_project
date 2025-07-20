@@ -1,0 +1,38 @@
+services:
+  auth-service:
+    build:
+      context: ./auth-microservice
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  api-gateway:
+    build:
+      context: ./api-gateway-microservice
+    container_name: api-gateway
+    ports:
+      - "8000:8080"
+    depends_on:
+      - auth-service
+      - business-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+
+  business-service:
+    build:
+      context: ./business-data-service
+    container_name: business-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+

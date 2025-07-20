@@ -15,16 +15,22 @@ public class CustomerEntity extends BaseEntity {
     @Column(nullable = false, name = "customer_name")
     private String customerName;
 
-    @Column(nullable = false, name = "customer_surname")
+    @Column(nullable = true, name = "customer_surname")
     private String customerSurname;
 
     @Column(nullable = false, name = "contact")
     private String contact;
 
-    @Column(nullable = false, name = "position")
+    @Column(nullable = true, name = "position")
     private String position;
 
-    @Column(nullable = false, name = "institution")
+    @Column(nullable = false, name = "fs_code")
+    private String FSCode;
+
+    @Column(nullable = false, name = "mail")
+    private String mail;
+
+    @Column(nullable = true, name = "institution")
     private String institution;
 
     @Column(nullable = false, name = "TIN")

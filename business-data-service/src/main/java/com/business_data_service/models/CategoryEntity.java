@@ -26,8 +26,5 @@ public class CategoryEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<CategoryEntity> children;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InvoiceEntity> invoices = new ArrayList<>();
 }
 

@@ -49,6 +49,18 @@ public class InvoiceController implements BaseController<
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/fast/create")
+    public ResponseEntity<ApiResponseDto<InvoiceResponseDto>> fastInvoiceCreate(@RequestBody FastInvoiceCreateDto createDto) {
+        ApiResponseDto<InvoiceResponseDto> response = invoiceService.fastInvoiceCreate(createDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/create/template")
+    public ResponseEntity<ApiResponseDto<InvoiceResponseDto>> createTemplate(@RequestParam String id) {
+        ApiResponseDto<InvoiceResponseDto> response = invoiceService.createTemplate(id);
+        return ResponseEntity.ok(response);
+    }
+
     @Override
     @PutMapping
     public ResponseEntity<ApiResponseDto<InvoiceResponseDto>> update(@RequestBody InvoiceUpdateDto updateDto) {

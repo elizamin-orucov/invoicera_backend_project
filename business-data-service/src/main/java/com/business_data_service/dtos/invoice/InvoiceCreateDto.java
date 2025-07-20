@@ -13,8 +13,29 @@ import java.math.BigDecimal;
 @Getter
 public class InvoiceCreateDto {
 
-    @NotBlank(message = "Category ID must not be blank")
-    private String category_id;
+    @NotNull(message = "Recipient name must not be null")
+    private String recipientName;
+
+    @NotBlank(message = "Product ID must not be blank")
+    private String product_id;
+
+    @NotNull(message = "TIN must not be null")
+    private String TIN;
+
+    @NotNull(message = "Type must not be null")
+    private String type;
+
+    @NotNull(message = "Series must not be null")
+    private String series;
+
+    @NotNull(message = "Number must not be null")
+    private String number;
+
+    @NotNull(message = "Name must not be null")
+    private String name;
+
+    @NotNull(message = "Code must not be null")
+    private String code;
 
     @NotNull(message = "Unit must not be null")
     private String unitLabel;

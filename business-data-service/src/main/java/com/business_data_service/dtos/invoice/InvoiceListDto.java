@@ -1,5 +1,6 @@
 package com.business_data_service.dtos.invoice;
 
+import com.business_data_service.base.BaseDto;
 import com.business_data_service.base.BaseIdDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,12 @@ import java.math.BigDecimal;
 
 @Setter
 @Getter
-public class InvoiceListDto extends BaseIdDto {
+public class InvoiceListDto extends BaseDto {
+    private String recipientName;
+    private String TIN;
+    private String type;
+    private String series;
+    private String number;
     private String name;
     private String code;
     private String identification_number;

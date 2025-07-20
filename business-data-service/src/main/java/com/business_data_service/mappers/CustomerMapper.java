@@ -24,12 +24,14 @@ public class CustomerMapper {
     public CustomerEntity toEntity(CustomerCreateDto createDto){
         CustomerEntity entity = new CustomerEntity();
 
+//        entity.setCustomerSurname(createDto.getCustomerSurname());
+//        entity.setPosition(createDto.getPosition());
+//        entity.setInstitution(createDto.getInstitution());
         entity.setCustomerName(createDto.getCustomerName());
-        entity.setCustomerSurname(createDto.getCustomerSurname());
         entity.setContact(createDto.getContact());
-        entity.setPosition(createDto.getPosition());
-        entity.setInstitution(createDto.getInstitution());
-        entity.setTIN(encryptor.encrypt(createDto.getTIN()));
+        entity.setMail(createDto.getMail());
+        entity.setTIN(createDto.getTIN());
+        entity.setFSCode(createDto.getFSCode());
 
         return entity;
     }
@@ -39,11 +41,14 @@ public class CustomerMapper {
 
         entity.setId(idObfuscator.decode(updateDto.getCustomer_id()));
         entity.setCustomerName(updateDto.getCustomerName());
-        entity.setCustomerSurname(updateDto.getCustomerSurname());
         entity.setContact(updateDto.getContact());
-        entity.setPosition(updateDto.getPosition());
-        entity.setInstitution(updateDto.getInstitution());
-        entity.setTIN(encryptor.encrypt(updateDto.getTIN()));
+        entity.setFSCode(updateDto.getFSCode());
+        entity.setMail(updateDto.getMail());
+
+//        entity.setCustomerSurname(updateDto.getCustomerSurname());
+//        entity.setPosition(updateDto.getPosition());
+//        entity.setInstitution(updateDto.getInstitution());
+        entity.setTIN(updateDto.getTIN());
 
         return entity;
     }
@@ -52,14 +57,14 @@ public class CustomerMapper {
     public CustomerListDto toListDto(CustomerEntity entity){
         CustomerListDto listDto = new CustomerListDto();
 
-        String fullName = generateFullName(entity.getCustomerName(), entity.getCustomerSurname());
+//        String fullName = generateFullName(entity.getCustomerName(), entity.getCustomerSurname());
 
         listDto.setId(idObfuscator.encode(entity.getId()));
-        listDto.setFull_name(fullName);
+        listDto.setFull_name(entity.getCustomerName());
         listDto.setContact(entity.getContact());
         listDto.setPosition(entity.getPosition());
         listDto.setInstitution(entity.getInstitution());
-        listDto.setTIN(encryptor.decrypt(entity.getTIN()));
+        listDto.setTIN(entity.getTIN());
 
         return listDto;
     }
@@ -73,7 +78,7 @@ public class CustomerMapper {
         detailDto.setContact(entity.getContact());
         detailDto.setPosition(entity.getPosition());
         detailDto.setInstitution(entity.getInstitution());
-        detailDto.setTIN(encryptor.decrypt(entity.getTIN()));
+        detailDto.setTIN(entity.getTIN());
 
         return detailDto;
     }
