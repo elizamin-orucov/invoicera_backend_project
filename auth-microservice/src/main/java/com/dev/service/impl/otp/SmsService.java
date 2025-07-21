@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
-import static com.dev.service.impl.otp.SmsPayloadBuilder.buildSmsPayload;
 
 @Service
 public class SmsService {
@@ -22,23 +21,18 @@ public class SmsService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final SmsPayloadBuilder smsPayloadBuilder;
 
-    public SmsService(RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public SmsService(RestTemplate restTemplate, ObjectMapper objectMapper, SmsPayloadBuilder smsPayloadBuilder) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+        this.smsPayloadBuilder = smsPayloadBuilder;
     }
 
     public boolean sendOtp(String phoneNumber, String otpCode) {
         String url = "https://apps.lsim.az/quicksms/v1/smssender";
 
-        Map<String, String> payload = buildSmsPayload(phoneNumber, otpCode);
-
-        System.out.println("+++++++++++++++++++++++=");
-        System.out.println("+++++++++++++++++++++++=");
-        System.out.println("+++++++++++++++++++++++=");
-        System.out.println(phoneNumber);
-        System.out.println("+++++++++++++++++++++++=");
-        System.out.println("+++++++++++++++++++++++=");
+        Map<String, String> payload = smsPayloadBuilder.buildSmsPayload(phoneNumber, otpCode);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -53,32 +47,27 @@ public class SmsService {
 
                 String transactionId = json.has("obj") ? json.get("obj").asText() : null;
 
-                System.out.println("---------------------------");
-                System.out.println("---------------------------");
-                System.out.println(json);
-                System.out.println("---------------------------");
-                System.out.println("---------------------------");
 
                 if (transactionId != null) {
-                    logger.info("OTP gönderildi, transactionId: {}", transactionId);
+                    logger.info("OTP success, transactionId: {}", transactionId);
 
-                    // SMSModel kaydetme işlemi burada olabilir
+
                     // SMSModel sms = new SMSModel();
                     // sms.setTransactionId(transactionId);
                     // sms.save();
 
                     return true;
                 } else {
-                    logger.error("Response içinde 'obj' alanı yok.");
+                    logger.error("obj not found");
                     return false;
                 }
             } else {
-                logger.error("OTP gönderme başarısız oldu, status: {}", response.getStatusCode());
+                logger.error("OTP failed: {}", response.getStatusCode());
                 return false;
             }
 
         } catch (Exception e) {
-            logger.error("OTP gönderilirken hata oluştu: ", e);
+            logger.error("OTP send error: ", e);
             return false;
         }
     }

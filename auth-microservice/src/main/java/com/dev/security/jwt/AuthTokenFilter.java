@@ -6,6 +6,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,12 +26,29 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
 
+    private static final List<String> EXCLUDED_URLS = Arrays.asList(
+            "/api/auth/",
+            "/v3/api-docs/",
+            "/swagger-ui/"
+    );
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+        String requestURI = request.getRequestURI();
+
+        // Auth endpoint'lerini ve swagger URL'lerini atla
+        if (shouldSkipFilter(requestURI)) {
+            System.out.println("--------------------------------");
+            log.debug("Skipping JWT filter for URL: {}", requestURI);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
@@ -49,6 +69,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private boolean shouldSkipFilter(String requestURI) {
+        return EXCLUDED_URLS.stream().anyMatch(requestURI::startsWith);
     }
 
     private String parseJwt(HttpServletRequest request) {

@@ -13,28 +13,27 @@ import static com.dev.service.impl.otp.RandomCodeGenerate.generateNumberCode;
 public class SmsPayloadBuilder {
 
     @Value("${sms.login}")
-    private static String SMS_LOGIN;
+    private String SMS_LOGIN;
 
     @Value("${sms.sender}")
-    private static String SMS_SENDER;
+    private String SMS_SENDER;
 
     @Value("${sms.scheduled}")
-    private static String SMS_SCHEDULED;
+    private String SMS_SCHEDULED;
 
     @Value("${sms.unicode}")
-    private static String SMS_UNICODE;
+    private String SMS_UNICODE;
 
 
 //    private static String SMS_SENDER_URL = "https://apps.lsim.az/quicksms/v1/smssender";
     @Value("${sms.password.raw}")
-    private static String SMS_PASSWORD;
+    private String SMS_PASSWORD;
 
-    private static String WEBSITE_DOMAIN = "telef10.az";
+    private String WEBSITE_DOMAIN = "telef10.az";
 
-    private static String message = "Sizin birdəfəlik şifrəniz {otp_code}";
+    private String message = "Sizin birdəfəlik şifrəniz {otp_code}";
 
-    public static Map<String, String> buildSmsPayload(String phoneNumber, String otp_code) {
-
+    public Map<String, String> buildSmsPayload(String phoneNumber, String otp_code) {
         SMS_PASSWORD = md5Hash(SMS_PASSWORD);
 //        String otp_code = generateNumberCode(8);
         message = message.replace("{otp_code}", otp_code);
