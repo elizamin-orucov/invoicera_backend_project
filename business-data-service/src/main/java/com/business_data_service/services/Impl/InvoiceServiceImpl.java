@@ -5,11 +5,9 @@ import com.business_data_service.dtos.response.ApiResponseDto;
 import com.business_data_service.mappers.InvoiceMapper;
 import com.business_data_service.models.CategoryEntity;
 import com.business_data_service.models.InvoiceEntity;
+import com.business_data_service.models.InvoiceFastEntity;
 import com.business_data_service.models.ProductEntity;
-import com.business_data_service.repositories.CategoryRepository;
-import com.business_data_service.repositories.CustomerRepository;
-import com.business_data_service.repositories.InvoiceRepository;
-import com.business_data_service.repositories.ProductRepository;
+import com.business_data_service.repositories.*;
 import com.business_data_service.services.InvoiceService;
 import com.business_data_service.util.IdObfuscator;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,13 +23,15 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final IdObfuscator idObfuscator;
     private final ProductRepository productRepository;
     private final CustomerRepository customerRepository;
+    private final InvoiceFastRepository invoiceFastRepository;
 
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper mapper, IdObfuscator idObfuscator, ProductRepository productRepository, CustomerRepository customerRepository) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper mapper, IdObfuscator idObfuscator, ProductRepository productRepository, CustomerRepository customerRepository, InvoiceFastRepository invoiceFastRepository) {
         this.invoiceRepository = invoiceRepository;
         this.mapper = mapper;
         this.idObfuscator = idObfuscator;
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
+        this.invoiceFastRepository = invoiceFastRepository;
     }
 
     @Override
@@ -109,11 +109,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public ApiResponseDto<InvoiceResponseDto> fastInvoiceCreate(FastInvoiceCreateDto createDto) {
-        InvoiceEntity invoiceEntity = mapper.toEntity(createDto);
-        InvoiceEntity savedEntity = invoiceRepository.save(invoiceEntity);
-        InvoiceResponseDto response = mapper.toResponseDto(savedEntity);
-        return ApiResponseDto.<InvoiceResponseDto>builder()
+    public ApiResponseDto<FastInvoiceResponseDto> fastInvoiceCreate(FastInvoiceCreateDto createDto) {
+        InvoiceFastEntity invoiceEntity = mapper.toEntity(createDto);
+        InvoiceFastEntity savedEntity = invoiceFastRepository.save(invoiceEntity);
+        FastInvoiceResponseDto response = mapper.toResponseDto(savedEntity);
+        return ApiResponseDto.<FastInvoiceResponseDto>builder()
                 .response(response)
                 .success(true)
                 .message("success")

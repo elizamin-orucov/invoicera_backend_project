@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 
 @Setter
 @Getter
-public class FastInvoiceCreateDto {
-    private String customerID;
+public class FastInvoiceResponseDto {
+    private String customerName;
     private int quantity;
-    private String productID;
+    private String productName;
     private BigDecimal totalAmount;
 }

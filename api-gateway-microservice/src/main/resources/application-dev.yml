@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        #        - id: auth-server-demo
+        #          uri: http://localhost:9091
+        #          predicates:
+        #            - Path=/auth/**
+        #        - id: snaely-demo
+        #          uri: http://localhost:9092
+        #          predicates:
+        #            - Path=/snaely/**
+        - id: default-route
+          uri: http://localhost:8085
+          predicates:
+            - Path=/**
+        #        - id: stripe-route
+        #          uri: http://localhost:5000
+        #          predicates:
+        #            - Path=/public/payment/**
+        - id: auth-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=2
+  #        - id: basket-route
+  #          uri: http://localhost:8083
+  #          predicates:
+  #            - Path=/basket/**
+
+  main:
+    web-application-type: reactive
+
+eureka:
+  client:
+    enabled: false
+
+server:
+  port: 8000

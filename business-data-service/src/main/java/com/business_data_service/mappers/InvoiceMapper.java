@@ -3,6 +3,7 @@ package com.business_data_service.mappers;
 import com.business_data_service.dtos.invoice.*;
 import com.business_data_service.models.CustomerEntity;
 import com.business_data_service.models.InvoiceEntity;
+import com.business_data_service.models.InvoiceFastEntity;
 import com.business_data_service.models.ProductEntity;
 import com.business_data_service.models.enums.MeasurementUnit;
 import com.business_data_service.repositories.CustomerRepository;
@@ -58,8 +59,8 @@ public class InvoiceMapper {
         return entity;
     }
 
-    public InvoiceEntity toEntity(FastInvoiceCreateDto createDto){
-        InvoiceEntity entity = new InvoiceEntity();
+    public InvoiceFastEntity toEntity(FastInvoiceCreateDto createDto){
+        InvoiceFastEntity entity = new InvoiceFastEntity();
 
         CustomerEntity customerEntity = customerRepository.findById(idObfuscator.decode(createDto.getCustomerID()))
                 .orElseThrow(() -> new EntityNotFoundException("Müştəri tapılmadı: " + createDto.getCustomerID()));
@@ -68,11 +69,10 @@ public class InvoiceMapper {
                 .orElseThrow(() -> new EntityNotFoundException("Məhsul tapılmadı: " + createDto.getProductID()));
 
 
-        entity.setRecipientName(customerEntity.getCustomerName());
-        entity.setTIN(customerEntity.getTIN());
-        entity.setProduct(productEntity);
-
-
+        entity.setCustomerName(customerEntity.getCustomerName());
+        entity.setTotalAmount(createDto.getTotalAmount());
+        entity.setQuantity(createDto.getQuantity());
+        entity.setProductName(productEntity.getProductName());
 
         return entity;
     }
@@ -159,6 +159,15 @@ public class InvoiceMapper {
         dto.setId(idObfuscator.encode(entity.getId()));
         dto.setName(entity.getName());
         dto.setCode(entity.getCode());
+        return dto;
+    }
+
+    public FastInvoiceResponseDto toResponseDto(InvoiceFastEntity entity){
+        FastInvoiceResponseDto dto = new FastInvoiceResponseDto();
+        dto.setCustomerName(idObfuscator.encode(entity.getId()));
+        dto.setProductName(entity.getProductName());
+        dto.setCustomerName(entity.getCustomerName());
+        dto.setTotalAmount(entity.getTotalAmount());
         return dto;
     }
 }

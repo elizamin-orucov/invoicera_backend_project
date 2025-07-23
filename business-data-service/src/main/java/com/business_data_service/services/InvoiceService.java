@@ -7,5 +7,5 @@ public interface InvoiceService extends BaseCRUDService<
         InvoiceDetailDto, InvoiceListDto, InvoiceCreateDto, InvoiceUpdateDto, InvoiceResponseDto
         >{
     ApiResponseDto<InvoiceResponseDto> createTemplate(String id);
-    ApiResponseDto<InvoiceResponseDto> fastInvoiceCreate(FastInvoiceCreateDto createDto);
+    ApiResponseDto<FastInvoiceResponseDto> fastInvoiceCreate(FastInvoiceCreateDto createDto);
 }
