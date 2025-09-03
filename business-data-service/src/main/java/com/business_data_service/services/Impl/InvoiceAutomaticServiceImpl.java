@@ -1,8 +1,10 @@
 package com.business_data_service.services.Impl;
 
-import com.business_data_service.dtos.invoice.InvoiceAutomaticRequest;
+import com.business_data_service.dtos.invoice.InvoiceAutomaticCreateDto;
 import com.business_data_service.dtos.invoice.InvoiceAutomaticResponse;
+import com.business_data_service.dtos.invoice.InvoiceAutomaticUpdateDto;
 import com.business_data_service.dtos.response.ApiResponseDto;
+import com.business_data_service.mappers.InvoiceAutomaticMapper;
 import com.business_data_service.models.CustomerEntity;
 import com.business_data_service.models.InvoiceAutomaticEntity;
 import com.business_data_service.models.ProductEntity;
@@ -11,7 +13,6 @@ import com.business_data_service.repositories.InvoiceAutomaticRepository;
 import com.business_data_service.repositories.ProductRepository;
 import com.business_data_service.services.InvoiceAutomaticService;
 import com.business_data_service.util.IdObfuscator;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,12 +22,14 @@ public class InvoiceAutomaticServiceImpl implements InvoiceAutomaticService {
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
     private final IdObfuscator idObfuscator;
+    private final InvoiceAutomaticMapper mapper;
 
-    public InvoiceAutomaticServiceImpl(InvoiceAutomaticRepository repository, CustomerRepository customerRepository, ProductRepository productRepository, IdObfuscator idObfuscator) {
+    public InvoiceAutomaticServiceImpl(InvoiceAutomaticRepository repository, CustomerRepository customerRepository, ProductRepository productRepository, IdObfuscator idObfuscator, InvoiceAutomaticMapper mapper) {
         this.repository = repository;
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.idObfuscator = idObfuscator;
+        this.mapper = mapper;
     }
 
     private CustomerEntity getCustomer(String customerID){
@@ -39,36 +42,30 @@ public class InvoiceAutomaticServiceImpl implements InvoiceAutomaticService {
 
 
     @Override
-    public ApiResponseDto<InvoiceAutomaticResponse> createInvoice(InvoiceAutomaticRequest request) {
-        InvoiceAutomaticEntity invoice = new InvoiceAutomaticEntity();
+    public ApiResponseDto<InvoiceAutomaticResponse> createInvoice(InvoiceAutomaticCreateDto request) {
 
-        CustomerEntity customerEntity = getCustomer(request.getCustomerID());
+        InvoiceAutomaticEntity entity = mapper.toEntity(request);
+        InvoiceAutomaticEntity savedEntity = repository.save(entity);
 
-        ProductEntity productEntity = getProduct(request.getProductID());
-
-
-        if (productEntity == null | customerEntity == null){
-            throw new EntityNotFoundException("invalid ID");
-        }
-
-        invoice.setCustomer(customerEntity.getCustomerName());
-        invoice.setProduct(productEntity.getProductCode());
-        invoice.setPrice(request.getPrice());
-        invoice.setDate(request.getDate());
-
-        InvoiceAutomaticResponse response = new InvoiceAutomaticResponse();
-
-        InvoiceAutomaticEntity savedInvoice = repository.save(invoice);
-
-        response.setId(idObfuscator.encode(savedInvoice.getId()));
-        response.setCustomerName(customerEntity.getCustomerName());
-        response.setProductName(productEntity.getProductName());
-        response.setSuccess(true);
-        response.setMessage("success");
+        InvoiceAutomaticResponse response = mapper.toInvoiceAutomaticResponse(savedEntity);
 
         return ApiResponseDto.<InvoiceAutomaticResponse>builder()
                 .success(true)
                 .message("success create")
+                .response(response)
+                .build();
+    }
+
+    @Override
+    public ApiResponseDto<InvoiceAutomaticResponse> updateInvoice(InvoiceAutomaticUpdateDto request) {
+        InvoiceAutomaticEntity entity = mapper.toEntity(request);
+        repository.save(entity);
+
+        InvoiceAutomaticResponse response = mapper.toInvoiceAutomaticResponse(entity);
+
+        return ApiResponseDto.<InvoiceAutomaticResponse>builder()
+                .success(true)
+                .message("success update")
                 .response(response)
                 .build();
     }

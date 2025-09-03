@@ -14,11 +14,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "automatic_invoice")
 public class InvoiceAutomaticEntity extends BaseEntity {
-    @Column(nullable = false, name = "customer")
-    private String customer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerEntity customer;
 
-    @Column(nullable = false, name = "product")
-    private String product;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity product;
 
     @Column(nullable = false, name = "price")
     private BigDecimal price;

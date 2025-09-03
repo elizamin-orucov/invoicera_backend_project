@@ -30,7 +30,6 @@ public class WebSecurityConfig {
 
     private final AuthEntryPointJwt unauthorizedHandler;
 
-
     @Value("{access_host}")
     private String access_host;
 

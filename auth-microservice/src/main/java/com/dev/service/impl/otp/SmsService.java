@@ -41,6 +41,27 @@ public class SmsService {
 
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println(response);
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
 
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 JsonNode json = objectMapper.readTree(response.getBody());

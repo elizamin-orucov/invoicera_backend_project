@@ -3,6 +3,7 @@ package com.business_data_service.controllers;
 import com.business_data_service.controllers.base.BaseController;
 import com.business_data_service.dtos.invoice.*;
 import com.business_data_service.dtos.response.ApiResponseDto;
+import com.business_data_service.services.InvoiceAutomaticService;
 import com.business_data_service.services.InvoiceService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +21,11 @@ public class InvoiceController implements BaseController<
         InvoiceResponseDto
         > {
     private final InvoiceService invoiceService;
+    private final InvoiceAutomaticService invoiceAutomaticService;
 
-    public InvoiceController(InvoiceService invoiceService) {
+    public InvoiceController(InvoiceService invoiceService, InvoiceAutomaticService invoiceAutomaticService) {
         this.invoiceService = invoiceService;
+        this.invoiceAutomaticService = invoiceAutomaticService;
     }
 
     @Override
@@ -39,6 +42,18 @@ public class InvoiceController implements BaseController<
     @GetMapping("/{invoice_id}")
     public ResponseEntity<InvoiceDetailDto> fetchById(@PathVariable("invoice_id") String id) {
         InvoiceDetailDto response = invoiceService.detail(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/auto/create")
+    public ResponseEntity<ApiResponseDto<InvoiceAutomaticResponse>> createAuto(@RequestBody InvoiceAutomaticCreateDto createDto){
+        ApiResponseDto<InvoiceAutomaticResponse> response = invoiceAutomaticService.createInvoice(createDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/auto/update")
+    public ResponseEntity<ApiResponseDto<InvoiceAutomaticResponse>> updateAuto(@RequestBody InvoiceAutomaticUpdateDto updateDto){
+        ApiResponseDto<InvoiceAutomaticResponse> response = invoiceAutomaticService.updateInvoice(updateDto);
         return ResponseEntity.ok(response);
     }
 
