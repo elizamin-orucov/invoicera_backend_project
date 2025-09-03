@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-public class InvoiceAutomaticRequest {
+public class InvoiceAutomaticCreateDto {
     @NotBlank(message = "Customer ID must not be blank")
     private String customerID;
 
@@ -25,6 +25,6 @@ public class InvoiceAutomaticRequest {
 
     @NotNull(message = "Date must not be null")
     @Future(message = "Date must be in the future")
-    private LocalDate date;
+    private LocalDate date_of_payment;
 }
 
