@@ -1,6 +1,7 @@
 package com.business_data_service.services.Impl;
 
 import com.business_data_service.dtos.invoice.InvoiceAutomaticCreateDto;
+import com.business_data_service.dtos.invoice.InvoiceAutomaticListDto;
 import com.business_data_service.dtos.invoice.InvoiceAutomaticResponse;
 import com.business_data_service.dtos.invoice.InvoiceAutomaticUpdateDto;
 import com.business_data_service.dtos.response.ApiResponseDto;
@@ -13,6 +14,8 @@ import com.business_data_service.repositories.InvoiceAutomaticRepository;
 import com.business_data_service.repositories.ProductRepository;
 import com.business_data_service.services.InvoiceAutomaticService;
 import com.business_data_service.util.IdObfuscator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -68,5 +71,11 @@ public class InvoiceAutomaticServiceImpl implements InvoiceAutomaticService {
                 .message("success update")
                 .response(response)
                 .build();
+    }
+
+    @Override
+    public Page<InvoiceAutomaticListDto> list(Pageable pageable) {
+        Page<InvoiceAutomaticListDto> response = repository.findAll(pageable).map(mapper::toInvoiceAutomaticListDto);
+        return response;
     }
 }

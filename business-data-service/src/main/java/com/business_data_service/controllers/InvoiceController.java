@@ -45,13 +45,22 @@ public class InvoiceController implements BaseController<
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/auto/create")
+    @GetMapping("/automatics")
+    public ResponseEntity<Page<InvoiceAutomaticListDto>> fetchAllAuto(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        Pageable pageable = PageRequest.of(page-1, size);
+        return ResponseEntity.ok(invoiceAutomaticService.list(pageable));
+    }
+
+    @PostMapping("/automatics/create")
     public ResponseEntity<ApiResponseDto<InvoiceAutomaticResponse>> createAuto(@RequestBody InvoiceAutomaticCreateDto createDto){
         ApiResponseDto<InvoiceAutomaticResponse> response = invoiceAutomaticService.createInvoice(createDto);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/auto/update")
+    @PutMapping("/automatics/update")
     public ResponseEntity<ApiResponseDto<InvoiceAutomaticResponse>> updateAuto(@RequestBody InvoiceAutomaticUpdateDto updateDto){
         ApiResponseDto<InvoiceAutomaticResponse> response = invoiceAutomaticService.updateInvoice(updateDto);
         return ResponseEntity.ok(response);

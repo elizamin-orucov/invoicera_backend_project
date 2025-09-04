@@ -1,6 +1,7 @@
 package com.business_data_service.mappers;
 
 import com.business_data_service.dtos.invoice.InvoiceAutomaticCreateDto;
+import com.business_data_service.dtos.invoice.InvoiceAutomaticListDto;
 import com.business_data_service.dtos.invoice.InvoiceAutomaticResponse;
 import com.business_data_service.dtos.invoice.InvoiceAutomaticUpdateDto;
 import com.business_data_service.models.CustomerEntity;
@@ -37,12 +38,30 @@ public class InvoiceAutomaticMapper {
         return response;
     }
 
+    public InvoiceAutomaticListDto toInvoiceAutomaticListDto(InvoiceAutomaticEntity entity){
+        InvoiceAutomaticListDto response = new InvoiceAutomaticListDto();
+
+        response.setId(idObfuscator.encode(entity.getId()));
+        response.setCustomerName(entity.getCustomer().getCustomerName());
+        response.setProductName(entity.getProduct().getProductName());
+        response.setPrice(entity.getPrice());
+        response.setDate_of_payment(entity.getDate());
+
+        return response;
+    }
+
     // to entity
     public InvoiceAutomaticEntity toEntity(InvoiceAutomaticCreateDto createDto){
         CustomerEntity customer = findCustomer(idObfuscator.decode(createDto.getCustomerID()));
         ProductEntity product = findProduct(idObfuscator.decode(createDto.getProductID()));
         InvoiceAutomaticEntity entity = new InvoiceAutomaticEntity();
         entity.setCustomer(customer);
+        System.out.println(entity.getCustomer());
+        System.out.println(entity.getCustomer());
+        System.out.println(entity.getCustomer());
+        System.out.println(entity.getCustomer());
+        System.out.println(entity.getCustomer());
+        System.out.println(entity.getCustomer());
         entity.setProduct(product);
         entity.setPrice(createDto.getPrice());
         entity.setDate(createDto.getDate_of_payment());
