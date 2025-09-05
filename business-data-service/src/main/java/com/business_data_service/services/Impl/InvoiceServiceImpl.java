@@ -53,7 +53,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public ApiResponseDto<InvoiceResponseDto> create(InvoiceCreateDto invoiceCreateDto) {
-        ProductEntity productEntity = productRepository.findById(idObfuscator.decode(invoiceCreateDto.getProduct_id())).orElse(null);
+        ProductEntity productEntity = productRepository.findById(idObfuscator.decode(invoiceCreateDto.getProductID())).orElse(null);
 
         if (productEntity == null){
             throw new EntityNotFoundException("category not found");

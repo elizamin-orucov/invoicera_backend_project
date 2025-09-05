@@ -17,7 +17,7 @@ public class InvoiceCreateDto {
     private String recipientName;
 
     @NotBlank(message = "Product ID must not be blank")
-    private String product_id;
+    private String productID;
 
     @NotNull(message = "TIN must not be null")
     private String TIN;
@@ -42,7 +42,7 @@ public class InvoiceCreateDto {
 
     @NotNull(message = "Unit price must not be null")
     @DecimalMin(value = "0.0", message = "Unit price must be zero or positive")
-    private BigDecimal unit_price;
+    private BigDecimal unitPrice;
 
     @NotNull(message = "Quantity must not be null")
     @DecimalMin(value = "0.0", message = "Quantity must be zero or positive")
@@ -50,33 +50,33 @@ public class InvoiceCreateDto {
 
     @NotNull(message = "Total price must not be null")
     @DecimalMin(value = "0.0", message = "Total price must be zero or positive")
-    private BigDecimal total_price;
+    private BigDecimal totalPrice;
 
     @NotNull(message = "Excise degree must not be null")
     @DecimalMin(value = "0.0", message = "Excise degree must be zero or positive")
-    private BigDecimal excise_degree;
+    private BigDecimal exciseDegree;
 
     @NotNull(message = "Excise price must not be null")
     @DecimalMin(value = "0.0", message = "Excise price must be zero or positive")
-    private BigDecimal excise_price;
+    private BigDecimal excisePrice;
 
     @NotNull(message = "Road tax must not be null")
     @DecimalMin(value = "0.0", message = "Road tax must be zero or positive")
-    private BigDecimal road_tax;
+    private BigDecimal roadTax;
 
     @NotBlank(message = "Identification number must not be blank")
-    private String identification_number;
+    private String identificationNumber;
 
     @NotNull(message = "VAT 18% must not be null")
     @DecimalMin(value = "0.0", message = "VAT 18% must be zero or positive")
-    private BigDecimal VAT18_percent;
+    private BigDecimal VAT18Percent;
 
     @NotNull(message = "VAT 0% must not be null")
     @DecimalMin(value = "0.0", message = "VAT 0% must be zero or positive")
-    private BigDecimal VAT0_percent;
+    private BigDecimal VAT0Percent;
 
     @NotNull(message = "VAT exempt must not be null")
     @DecimalMin(value = "0.0", message = "VAT exempt must be zero or positive")
-    private BigDecimal VAT_exempt;
+    private BigDecimal VATExempt;
 }
 

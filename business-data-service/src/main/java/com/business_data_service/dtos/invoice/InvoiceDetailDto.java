@@ -22,6 +22,8 @@ public class InvoiceDetailDto extends BaseIdDto {
 
     private String number;
 
+    private String groupName;
+
     private String name;
 
     private String code;

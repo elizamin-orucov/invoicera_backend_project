@@ -45,16 +45,16 @@ public class InvoiceMapper {
         entity.setGroupName(createDto.getGroupName());
         entity.setCode(createDto.getCode());
         entity.setUnit(unit);
-        entity.setUnitPrice(createDto.getUnit_price());
+        entity.setUnitPrice(createDto.getUnitPrice());
         entity.setQuantity(createDto.getQuantity());
-        entity.setTotalPrice(createDto.getTotal_price());
-        entity.setExciseDegree(createDto.getExcise_degree());
-        entity.setExcisePrice(createDto.getExcise_price());
-        entity.setRoadTax(createDto.getRoad_tax());
-        entity.setIdentificationNumber(createDto.getIdentification_number());
-        entity.setVAT18Percent(createDto.getVAT18_percent());
-        entity.setVAT0Percent(createDto.getVAT0_percent());
-        entity.setVATExempt(createDto.getVAT_exempt());
+        entity.setTotalPrice(createDto.getTotalPrice());
+        entity.setExciseDegree(createDto.getExciseDegree());
+        entity.setExcisePrice(createDto.getExcisePrice());
+        entity.setRoadTax(createDto.getRoadTax());
+        entity.setIdentificationNumber(createDto.getIdentificationNumber());
+        entity.setVAT18Percent(createDto.getVAT18Percent());
+        entity.setVAT0Percent(createDto.getVAT0Percent());
+        entity.setVATExempt(createDto.getVATExempt());
 
         return entity;
     }
@@ -81,7 +81,7 @@ public class InvoiceMapper {
         MeasurementUnit unit = MeasurementUnit.fromLabel(updateDto.getUnitLabel());
 
         InvoiceEntity entity = new InvoiceEntity();
-        entity.setId(idObfuscator.decode(updateDto.getInvoice_id()));
+        entity.setId(idObfuscator.decode(updateDto.getId()));
         entity.setRecipientName(updateDto.getRecipientName());
         entity.setTIN(encryptor.encrypt(updateDto.getTIN()));
         entity.setType(updateDto.getType());
@@ -90,16 +90,16 @@ public class InvoiceMapper {
         entity.setGroupName(updateDto.getGroupName());
         entity.setCode(updateDto.getCode());
         entity.setUnit(unit);
-        entity.setUnitPrice(updateDto.getUnit_price());
+        entity.setUnitPrice(updateDto.getUnitPrice());
         entity.setQuantity(updateDto.getQuantity());
-        entity.setTotalPrice(updateDto.getTotal_price());
-        entity.setExciseDegree(updateDto.getExcise_degree());
-        entity.setExcisePrice(updateDto.getExcise_price());
-        entity.setRoadTax(updateDto.getRoad_tax());
-        entity.setIdentificationNumber(updateDto.getIdentification_number());
-        entity.setVAT18Percent(updateDto.getVAT18_percent());
-        entity.setVAT0Percent(updateDto.getVAT0_percent());
-        entity.setVATExempt(updateDto.getVAT_exempt());
+        entity.setTotalPrice(updateDto.getTotalPrice());
+        entity.setExciseDegree(updateDto.getExciseDegree());
+        entity.setExcisePrice(updateDto.getExcisePrice());
+        entity.setRoadTax(updateDto.getRoadTax());
+        entity.setIdentificationNumber(updateDto.getIdentificationNumber());
+        entity.setVAT18Percent(updateDto.getVAT18Percent());
+        entity.setVAT0Percent(updateDto.getVAT0Percent());
+        entity.setVATExempt(updateDto.getVATExempt());
 
         return entity;
     }
@@ -118,7 +118,7 @@ public class InvoiceMapper {
         dto.setGroupName(entity.getGroupName());
         dto.setName(entity.getProduct().getProductName());
         dto.setCode(entity.getCode());
-        dto.setIdentification_number(entity.getIdentificationNumber());
+        dto.setIdentificationNumber(entity.getIdentificationNumber());
         dto.setUnit(entity.getUnit().name());
         dto.setQuantity(entity.getQuantity());
         dto.setUnitPrice(entity.getUnitPrice());

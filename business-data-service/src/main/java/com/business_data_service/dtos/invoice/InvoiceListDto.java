@@ -18,7 +18,7 @@ public class InvoiceListDto extends BaseDto {
     private String groupName;
     private String name;
     private String code;
-    private String identification_number;
+    private String identificationNumber;
     private String unit;
     private BigDecimal quantity;
     private BigDecimal unitPrice;
