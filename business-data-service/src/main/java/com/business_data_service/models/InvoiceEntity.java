@@ -47,8 +47,8 @@ public class InvoiceEntity extends BaseEntity {
     private String code;
 
 //    @NotNull(message = "Name unit cannot be null")
-    @Column(name = "name", nullable = true)
-    private String name;
+    @Column(name = "group_name", nullable = true)
+    private String groupName;
 
     /**
      * The unit of measurement for the invoiced item.

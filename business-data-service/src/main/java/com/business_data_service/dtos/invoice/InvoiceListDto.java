@@ -15,6 +15,7 @@ public class InvoiceListDto extends BaseDto {
     private String type;
     private String series;
     private String number;
+    private String groupName;
     private String name;
     private String code;
     private String identification_number;
@@ -22,4 +23,11 @@ public class InvoiceListDto extends BaseDto {
     private BigDecimal quantity;
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
+    // new add
+    private BigDecimal excisePrice;
+    private BigDecimal roadTax;
+    private BigDecimal VAT0Percent;
+    private BigDecimal VATExempt;
+    private BigDecimal VATIncluded;
+
 }

@@ -31,10 +31,10 @@ public class InvoiceCreateDto {
     @NotNull(message = "Number must not be null")
     private String number;
 
-    @NotNull(message = "Name must not be null")
-    private String name;
+    @NotNull(message = "Group Name must not be null")
+    private String groupName;
 
-    @NotNull(message = "Code must not be null")
+//    @NotNull(message = "Code must not be null")
     private String code;
 
     @NotNull(message = "Unit must not be null")

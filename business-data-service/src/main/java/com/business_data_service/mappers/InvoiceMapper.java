@@ -42,7 +42,7 @@ public class InvoiceMapper {
         entity.setType(createDto.getType());
         entity.setSeries(createDto.getSeries());
         entity.setNumber(createDto.getNumber());
-        entity.setName(createDto.getName());
+        entity.setGroupName(createDto.getGroupName());
         entity.setCode(createDto.getCode());
         entity.setUnit(unit);
         entity.setUnitPrice(createDto.getUnit_price());
@@ -87,7 +87,7 @@ public class InvoiceMapper {
         entity.setType(updateDto.getType());
         entity.setSeries(updateDto.getSeries());
         entity.setNumber(updateDto.getNumber());
-        entity.setName(updateDto.getName());
+        entity.setGroupName(updateDto.getGroupName());
         entity.setCode(updateDto.getCode());
         entity.setUnit(unit);
         entity.setUnitPrice(updateDto.getUnit_price());
@@ -115,7 +115,8 @@ public class InvoiceMapper {
         dto.setId(idObfuscator.encode(entity.getId()));
         dto.setRecipientName(entity.getRecipientName());
         dto.setTIN(encryptor.decrypt(entity.getTIN()));
-        dto.setName(entity.getName());
+        dto.setGroupName(entity.getGroupName());
+        dto.setName(entity.getProduct().getProductName());
         dto.setCode(entity.getCode());
         dto.setIdentification_number(entity.getIdentificationNumber());
         dto.setUnit(entity.getUnit().name());
@@ -124,6 +125,12 @@ public class InvoiceMapper {
         dto.setTotalPrice(entity.getTotalPrice());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());
+        // add new
+        dto.setRoadTax(entity.getRoadTax());
+        dto.setExcisePrice(entity.getExcisePrice());
+        dto.setVATExempt(entity.getVATExempt());
+        dto.setVAT0Percent(entity.getVAT0Percent());
+        dto.setVATIncluded(entity.getVAT18Percent());
         return dto;
     }
 
@@ -138,7 +145,7 @@ public class InvoiceMapper {
         dto.setType(entity.getType());
         dto.setSeries(entity.getSeries());
         dto.setNumber(entity.getNumber());
-        dto.setName(entity.getName());
+        dto.setName(entity.getGroupName());
         dto.setUnit(entity.getUnit().getLabel());
         dto.setUnitPrice(entity.getUnitPrice());
         dto.setQuantity(entity.getQuantity());
@@ -157,7 +164,7 @@ public class InvoiceMapper {
     public InvoiceResponseDto toResponseDto(InvoiceEntity entity){
         InvoiceResponseDto dto = new InvoiceResponseDto();
         dto.setId(idObfuscator.encode(entity.getId()));
-        dto.setName(entity.getName());
+        dto.setName(entity.getGroupName());
         dto.setCode(entity.getCode());
         return dto;
     }

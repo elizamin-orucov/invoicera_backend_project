@@ -85,7 +85,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         template.setSeries(original.getSeries());
         template.setNumber(original.getNumber());
         template.setCode(original.getCode());
-        template.setName(original.getName());
+        template.setGroupName(original.getGroupName());
         template.setUnit(original.getUnit());
         template.setUnitPrice(original.getUnitPrice());
         template.setQuantity(original.getQuantity());
